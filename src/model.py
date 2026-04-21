@@ -1,11 +1,13 @@
 
 #Importando bibliotecas
+import matplotlib.pyplot as plt
 import pandas as pd
-import os
+import seaborn as sns
 from imblearn.over_sampling import SMOTE
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix
+from xgboost import XGBClassifier
 
 #carregar dados e definir features e target
 def carregar_arquivo (caminho):
@@ -35,29 +37,37 @@ def balancear_dados(X_train, y_train):
     return X_res, y_res
 
 #Treinar o modelo
-def treinar_modelo(X_train, y_train):
+def treinar_modelo_random_forest(X_train, y_train):
 
     modelo = RandomForestClassifier(random_state=42)
     modelo.fit(X_train, y_train)
     return modelo
 
+def treinar_modelo_xgboost (X_train, y_train):
+
+    modelo_xgb = XGBClassifier(random_state = 42)
+    modelo_xgb.fit(X_train,y_train)
+    return modelo_xgb
+
 #Avalição do modelo
 def avaliar_modelo(modelo, X_test, y_test):
-
-    #Previsão
+    nome = type(modelo).__name__
     y_pred = modelo.predict(X_test)
-
-    #Relatório de classificação
-    print("Classification Report:")
+    
+    print(f"Classification Report: {nome}")
     print(classification_report(y_test, y_pred))
     
-    #Resumo do desempenho do modelo
-    print("Confusion Matrix:")
-    print(confusion_matrix(y_test, y_pred))
+    cm = confusion_matrix(y_test, y_pred)
+    print(f"Confusion Matrix: {nome}\n")
+    print(cm)
+    
+    return y_pred, cm
 
 if __name__ == "__main__":
     X, y = carregar_arquivo(caminho = 'data/processed/creditcard_limpo.csv')
     X_train, X_test, y_train, y_test = dividir_dados(X,y)
     X_res, y_res = balancear_dados(X_train, y_train)
-    modelo = treinar_modelo(X_res, y_res)
-    avaliar_modelo(modelo, X_test, y_test)
+    modelo_randon = treinar_modelo_random_forest(X_res, y_res)
+    modelo_xgb = treinar_modelo_xgboost (X_res, y_res)
+    avaliar_modelo(modelo_randon, X_test, y_test)
+    avaliar_modelo(modelo_xgb, X_test, y_test)
