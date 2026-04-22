@@ -46,7 +46,7 @@ fraud-detection/
 ## Resultados
 
 ### Distribuição dos dados
-O dataset possui 284.807 transações, sendo apenas 473 fraudes — menos de 0.2% do total.
+O dataset possui 284.807 transações (283.726 removendo duplicatas), sendo apenas 473 fraudes — menos de 0.2% do total.
 Esse desbalanceamento extremo foi o principal desafio técnico do projeto.
 
 ![Distribuição de Classes](reports/distribuicao_classes.png)
