@@ -55,7 +55,7 @@ Esse desbalanceamento extremo foi o principal desafio técnico do projeto.
 
 ![Distribuição do Amount](reports/distribuicao_amount.png)
 
-Ao analisar os dados de valores, observou-se que transações fraudulentas tendem a ter valores menores que as legítimas — a curva vermelha está deslocada para a esquerda em relação à verde. 
+Ao analisar os dados de valores após realização do Z-score na variável em questão, observou-se que transações fraudulentas tendem a ter valores menores que as legítimas — a curva vermelha está deslocada para a esquerda em relação à verde. 
 
 Esse comportamento reflete o mundo real: fraudadores preferem valores baixos para evitar bloqueios automáticos e passar despercebidos.
 
